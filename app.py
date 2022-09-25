@@ -43,9 +43,10 @@ async def echo(websocket):
         print(message)
         message=message.split(" ")
         if message[0] == "start":
-            final_message = run_program(message [1])
+            final_message = run_program(message[1])
+            print("jjj",final_message)
 
-        await websocket.send(json.dump(final_message))
+        await websocket.send(json.dumps(final_message))
 
 async def main():
     # Set the stop condition when receiving SIGTERM.
@@ -55,12 +56,10 @@ async def main():
 
     async with websockets.serve(
         echo,
-        host="",
-        port=int(os.environ["PORT"]),
+        host="localhost",
+        port=8000,
     ):
         await stop
-
-
 
 if __name__ == "__main__":
     asyncio.run(main())
